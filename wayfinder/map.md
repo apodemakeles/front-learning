@@ -1,0 +1,36 @@
+---
+id: 0
+title: 前端课程地图
+labels: [wayfinder:map]
+status: open
+---
+
+## Destination
+
+GitHub 上的一套完整前端课程仓库：20 年经验的后端开发者跟随学完后，能独立用 Vue 3（并能读懂、维护存量 Vue 2 项目）完成前端开发、构建、部署、上线。课程全部原创撰写、由浅入深、每课有作业，贯穿项目（毕业项目）有可访问的线上地址。
+
+## Notes
+
+- 领域：前端教学。写作规范、学员画像、后端类比表见根目录 `AGENTS.md`——每个会话开工前必读。
+- tracker 为本地 markdown，规约见 `wayfinder/README.md`。
+- 本 effort 允许携带执行：大纲定稿（005）之后，"写课"以 task 工单进入地图，每次会话推进一课。
+- HITL 工单（grilling）需要学员在线一问一答推进，agent 不代答。
+- 公司存量栈速记（详细版 `notes/company-stack.md`）：存量主力 Vue 2.6 + vue-cli4/webpack4 + Vuex + element-ui（class 风格 TS）；新项目 Vue 3 + Vite + Pinia + TS；部署 nginx（+ Docker 多阶段）+ 多环境 .env 构建模式。课程主线教新版本，存量技术以"维护视角"专题覆盖。
+
+## Decisions so far
+
+- [2026-09 版本基准与工具链选型](tickets/004-version-baseline.md) — 待研究完成后回填此行
+
+## Not yet specified
+
+- 每课作业的验收方式：自查清单还是脚本自动检查
+- 课程配套代码的组织方式：随课目录、独立示例仓库还是 git tag 快照
+- 是否需要一节 React 概览课拓宽视野
+- 课程页是否升级为 VitePress 文档站（当前用 README 目录）
+
+## Out of scope
+
+- HTML / CSS / Ajax 基础教学（学员已明确排除）
+- Node.js 服务端开发（Express / NestJS 等）——只覆盖前端工程所需
+- React 及其他 MV* 框架的深度教学
+- 移动端跨端框架（uni-app / 小程序 / RN）与微前端（wujie）实操——最多概览带过
