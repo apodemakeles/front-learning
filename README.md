@@ -16,7 +16,9 @@
 
 课程地图见 [wayfinder/map.md](wayfinder/map.md)。关键决策正通过 wayfinder 工单逐个敲定，尚未动笔写课。
 
-待与学员讨论的下一个决策：**[毕业项目选型](wayfinder/tickets/001-capstone-project.md)**。
+已定稿：**[毕业项目选型](wayfinder/tickets/001-capstone-project.md)** —— 虚拟门店轻量管理后台（Vue 3 + Vite + Pinia + Element Plus，mock 主线 + 可选自建后端）。
+
+下一个待讨论决策：**[TypeScript 的引入时机与深度](wayfinder/tickets/002-typescript-strategy.md)**。
 
 ## 学习路线总览（草案——以「课程大纲定稿」工单为准）
 

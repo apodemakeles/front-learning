@@ -16,8 +16,11 @@ GitHub 上的一套完整前端课程仓库：20 年经验的后端开发者跟�
 - 本 effort 允许携带执行：大纲定稿（005）之后，"写课"以 task 工单进入地图，每次会话推进一课。
 - HITL 工单（grilling）需要学员在线一问一答推进，agent 不代答。
 - 公司存量栈速记（详细版 `notes/company-stack.md`）：存量主力 Vue 2.6 + vue-cli4/webpack4 + Vuex + element-ui（class 风格 TS）；新项目 Vue 3 + Vite + Pinia + TS；部署 nginx（+ Docker 多阶段）+ 多环境 .env 构建模式。课程主线教新版本，存量技术以"维护视角"专题覆盖。
+- 学员偏好（001 确立）：示例场景可虚拟、不追求业务贴近；技术栈与工程形态必须贴近公司真实栈。增强类功能（权限菜单/上传/WebSocket）不进毕业项目主线。
 
 ## Decisions so far
+
+- [毕业项目选型](tickets/001-capstone-project.md) — 虚拟门店轻量管理后台；基础功能包（登录/守卫、商品列表分页筛选、CRUD 表单、看板图表）；mock 主线 + 可选自建后端；场景可虚拟、技术贴近公司栈
 
 - [2026-09 版本基准与工具链选型](tickets/004-version-baseline.md) — 锁定 Node 24 / pnpm 11 / Vue 3.5 / Vite 8 / Router 5 / Pinia 4 / TS 6（vue-tsc 不支持 TS 7）/ ESLint 10 / Vitest 4 / Element Plus 2.14，详见 [notes/tech-baseline.md](../notes/tech-baseline.md)
 
