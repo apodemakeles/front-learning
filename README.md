@@ -27,7 +27,7 @@
 | 三 | 现代 JavaScript | ESM 模块、常用语法、异步模型；与 Java 对照 |
 | 四 | Vue 3 入门 → 熟练 | 模板与响应式、组件、Composition API、事件与插槽 |
 | 五 | 原理课 | 响应式系统、虚拟 DOM 与渲染、组件通信机制 |
-| 六 | 路由与状态 | Vue Router 4、Pinia（含原理） |
+| 六 | 路由与状态 | Vue Router、Pinia（含原理；版本见[版本基准](notes/tech-baseline.md)） |
 | 七 | 工程化 | Vite 原理与配置、webpack 对照、ESLint / Prettier、环境变量 |
 | 八 | UI 与网络请求 | Element Plus、axios 封装、mock、错误处理 |
 | 九 | 存量 Vue 2 专题 | 与 Vue 3 差异清单、class 风格 TS、Vuex、迁移策略 |

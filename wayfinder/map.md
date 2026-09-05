@@ -19,7 +19,7 @@ GitHub 上的一套完整前端课程仓库：20 年经验的后端开发者跟�
 
 ## Decisions so far
 
-- [2026-09 版本基准与工具链选型](tickets/004-version-baseline.md) — 待研究完成后回填此行
+- [2026-09 版本基准与工具链选型](tickets/004-version-baseline.md) — 锁定 Node 24 / pnpm 11 / Vue 3.5 / Vite 8 / Router 5 / Pinia 4 / TS 6（vue-tsc 不支持 TS 7）/ ESLint 10 / Vitest 4 / Element Plus 2.14，详见 [notes/tech-baseline.md](../notes/tech-baseline.md)
 
 ## Not yet specified
 
