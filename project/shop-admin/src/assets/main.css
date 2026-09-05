@@ -1,0 +1,18 @@
+/* 全局样式：重置浏览器默认 + 基础字体（组件内部样式用 scoped，见 App.vue） */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    'PingFang SC',
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  background: #f5f6f8;
+  color: #1f2329;
+  -webkit-font-smoothing: antialiased;
+}
