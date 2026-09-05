@@ -13,7 +13,7 @@ GitHub 上的一套完整前端课程仓库：20 年经验的后端开发者跟�
 
 - 领域：前端教学。写作规范、学员画像、后端类比表见根目录 `AGENTS.md`——每个会话开工前必读。
 - tracker 为本地 markdown，规约见 `wayfinder/README.md`。
-- 本 effort 允许携带执行：大纲定稿（005）之后，"写课"以 task 工单进入地图，每次会话推进一课。
+- 本 effort 允许携带执行：**已进入写课阶段**（005 定稿后）。写课以 task 工单推进（007 起，每课一单，每次会话一课）；每完成一个模块再立下一批课的工单。
 - HITL 工单（grilling）需要学员在线一问一答推进，agent 不代答。
 - 公司存量栈速记（详细版 `notes/company-stack.md`）：存量主力 Vue 2.6 + vue-cli4/webpack4 + Vuex + element-ui（class 风格 TS）；新项目 Vue 3 + Vite + Pinia + TS；部署 nginx（+ Docker 多阶段）+ 多环境 .env 构建模式。课程主线教新版本，存量技术以"维护视角"专题覆盖。
 - 学员偏好（001 确立）：示例场景可虚拟、不追求业务贴近；技术栈与工程形态必须贴近公司真实栈。增强类功能（权限菜单/上传/WebSocket）不进毕业项目主线。
@@ -25,11 +25,10 @@ GitHub 上的一套完整前端课程仓库：20 年经验的后端开发者跟�
 - [TypeScript 的引入时机与深度](tickets/002-typescript-strategy.md) — 第一课起全 TS（轻量起步）；独立「给 Java 开发者的 TS 速成」只讲差异点；深度以读写公司级代码为限、不做类型体操；class 风格组件入存量专题独立一课
 
 - [2026-09 版本基准与工具链选型](tickets/004-version-baseline.md) — 锁定 Node 24 / pnpm 11 / Vue 3.5 / Vite 8 / Router 5 / Pinia 4 / TS 6（vue-tsc 不支持 TS 7）/ ESLint 10 / Vitest 4 / Element Plus 2.14，详见 [notes/tech-baseline.md](../notes/tech-baseline.md)
+- [课程大纲定稿](tickets/005-course-outline.md) — 38 课十一模块；框架与编码 26 课（学员要求扩容 +20h，全程约 40–50 小时）；原理=心智模型并入各课；Vue2 一课速览；README 已载正式目录
 
 ## Not yet specified
 
-- 每课作业的验收方式：自查清单还是脚本自动检查
-- 课程配套代码的组织方式：随课目录、独立示例仓库还是 git tag 快照
 - 是否需要一节 React 概览课拓宽视野
 - 课程页是否升级为 VitePress 文档站（当前用 README 目录）
 
