@@ -16,9 +16,12 @@
 
 课程地图见 [wayfinder/map.md](wayfinder/map.md)。关键决策正通过 wayfinder 工单逐个敲定，尚未动笔写课。
 
-已定稿：**[毕业项目选型](wayfinder/tickets/001-capstone-project.md)** —— 虚拟门店轻量管理后台（Vue 3 + Vite + Pinia + Element Plus，mock 主线 + 可选自建后端）。
+已定稿：
 
-下一个待讨论决策：**[TypeScript 的引入时机与深度](wayfinder/tickets/002-typescript-strategy.md)**。
+- **[毕业项目选型](wayfinder/tickets/001-capstone-project.md)** —— 虚拟门店轻量管理后台（Vue 3 + Vite + Pinia + Element Plus，mock 主线 + 可选自建后端）
+- **[TypeScript 策略](wayfinder/tickets/002-typescript-strategy.md)** —— 第一课起全 TS；「给 Java 开发者的 TS 速成」只讲差异点；深度以读写公司级代码为限
+
+下一个待讨论决策：**[部署与上线演练环境](wayfinder/tickets/003-deploy-env.md)**。
 
 ## 学习路线总览（草案——以「课程大纲定稿」工单为准）
 

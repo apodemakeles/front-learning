@@ -21,6 +21,7 @@ GitHub 上的一套完整前端课程仓库：20 年经验的后端开发者跟�
 ## Decisions so far
 
 - [毕业项目选型](tickets/001-capstone-project.md) — 虚拟门店轻量管理后台；基础功能包（登录/守卫、商品列表分页筛选、CRUD 表单、看板图表）；mock 主线 + 可选自建后端；场景可虚拟、技术贴近公司栈
+- [TypeScript 的引入时机与深度](tickets/002-typescript-strategy.md) — 第一课起全 TS（轻量起步）；独立「给 Java 开发者的 TS 速成」只讲差异点；深度以读写公司级代码为限、不做类型体操；class 风格组件入存量专题独立一课
 
 - [2026-09 版本基准与工具链选型](tickets/004-version-baseline.md) — 锁定 Node 24 / pnpm 11 / Vue 3.5 / Vite 8 / Router 5 / Pinia 4 / TS 6（vue-tsc 不支持 TS 7）/ ESLint 10 / Vitest 4 / Element Plus 2.14，详见 [notes/tech-baseline.md](../notes/tech-baseline.md)
 
