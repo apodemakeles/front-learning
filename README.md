@@ -20,8 +20,9 @@
 
 - **[毕业项目选型](wayfinder/tickets/001-capstone-project.md)** —— 虚拟门店轻量管理后台（Vue 3 + Vite + Pinia + Element Plus，mock 主线 + 可选自建后端）
 - **[TypeScript 策略](wayfinder/tickets/002-typescript-strategy.md)** —— 第一课起全 TS；「给 Java 开发者的 TS 速成」只讲差异点；深度以读写公司级代码为限
+- **[部署与上线演练环境](wayfinder/tickets/003-deploy-env.md)** —— 构建产物解剖 + 本机 nginx 配合（SPA 回退/gzip/缓存/多环境）；不用 Docker、云服务器与 CI/CD
 
-下一个待讨论决策：**[部署与上线演练环境](wayfinder/tickets/003-deploy-env.md)**。
+前置决策全部清空，下一单：**[课程大纲定稿](wayfinder/tickets/005-course-outline.md)**。
 
 ## 学习路线总览（草案——以「课程大纲定稿」工单为准）
 

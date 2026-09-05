@@ -7,7 +7,7 @@ status: open
 
 ## Destination
 
-GitHub 上的一套完整前端课程仓库：20 年经验的后端开发者跟随学完后，能独立用 Vue 3（并能读懂、维护存量 Vue 2 项目）完成前端开发、构建、部署、上线。课程全部原创撰写、由浅入深、每课有作业，贯穿项目（毕业项目）有可访问的线上地址。
+GitHub 上的一套完整前端课程仓库：20 年经验的后端开发者跟随学完后，能独立用 Vue 3（并能读懂、维护存量 Vue 2 项目）完成前端开发、构建、部署、上线。课程全部原创撰写、由浅入深、每课有作业，贯穿项目（毕业项目）以生产形态完成构建与本机 nginx 部署（003 定稿：不引入 Docker / 云服务器 / CI/CD / 第三方托管）。
 
 ## Notes
 
@@ -17,6 +17,7 @@ GitHub 上的一套完整前端课程仓库：20 年经验的后端开发者跟�
 - HITL 工单（grilling）需要学员在线一问一答推进，agent 不代答。
 - 公司存量栈速记（详细版 `notes/company-stack.md`）：存量主力 Vue 2.6 + vue-cli4/webpack4 + Vuex + element-ui（class 风格 TS）；新项目 Vue 3 + Vite + Pinia + TS；部署 nginx（+ Docker 多阶段）+ 多环境 .env 构建模式。课程主线教新版本，存量技术以"维护视角"专题覆盖。
 - 学员偏好（001 确立）：示例场景可虚拟、不追求业务贴近；技术栈与工程形态必须贴近公司真实栈。增强类功能（权限菜单/上传/WebSocket）不进毕业项目主线。
+- 学员偏好（003 确立）：部署只教"构建产物 + 本机 nginx"，明确拒绝 Docker、云服务器、CI/CD、GitHub Pages/Vercel 等第三方托管。讲解时尊重该边界，延伸阅读可提及但不实操。
 
 ## Decisions so far
 
@@ -38,3 +39,4 @@ GitHub 上的一套完整前端课程仓库：20 年经验的后端开发者跟�
 - Node.js 服务端开发（Express / NestJS 等）——只覆盖前端工程所需
 - React 及其他 MV* 框架的深度教学
 - 移动端跨端框架（uni-app / 小程序 / RN）与微前端（wujie）实操——最多概览带过
+- Docker / 容器化、云服务器部署、CI/CD 流水线、第三方托管（GitHub Pages / Vercel / Netlify）——003 定稿，学员明确拒绝
