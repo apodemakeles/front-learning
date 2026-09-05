@@ -16,7 +16,7 @@
 
 课程大纲已定稿（38 课，预计 40–50 小时），正按 wayfinder 工单逐课撰写。
 
-**进度：2 / 38 课已发布**
+**进度：3 / 38 课已发布**
 
 规划决策记录（详见 [wayfinder/map.md](wayfinder/map.md)）：
 
@@ -41,7 +41,7 @@
 
 | # | 课题 | 状态 |
 |---|---|---|
-| 03 | 现代 JavaScript 速览（ESM 与异步） | ⬜ |
+| 03 | [现代 JavaScript 速览（ESM 与异步）](lessons/03-modern-javascript-quick-tour.md) | ✅ |
 | 04 | 给 Java 开发者的 TypeScript 速成 | ⬜ |
 
 ### 模块三 · Vue 3 基础（5 课）· 毕业项目起步
