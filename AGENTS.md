@@ -63,10 +63,11 @@
 ```
 README.md          课程主页与目录（学员入口）
 AGENTS.md          本文件
-lessons/           课程文章（按编号命名，如 lessons/01-xxx.md）
-demos/             课程配套可运行示例
-project/           贯穿项目（毕业项目）
+lessons/           课程文章（NN-english-slug.md 命名，骨架见 templates/lesson-template.md）
+demos/             课程配套可运行示例（每课一目录，约定见 demos/README.md）
+project/           贯穿项目（毕业项目，第 5 课初始化）
 notes/             参考笔记（版本基准、存量栈调研等）
+templates/         课程文章骨架模板（写课工单套用）
 wayfinder/         课程规划地图与决策工单（进度唯一事实源）
 ```
 

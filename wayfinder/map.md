@@ -26,6 +26,7 @@ GitHub 上的一套完整前端课程仓库：20 年经验的后端开发者跟�
 
 - [2026-09 版本基准与工具链选型](tickets/004-version-baseline.md) — 锁定 Node 24 / pnpm 11 / Vue 3.5 / Vite 8 / Router 5 / Pinia 4 / TS 6（vue-tsc 不支持 TS 7）/ ESLint 10 / Vitest 4 / Element Plus 2.14，详见 [notes/tech-baseline.md](../notes/tech-baseline.md)
 - [课程大纲定稿](tickets/005-course-outline.md) — 38 课十一模块；框架与编码 26 课（学员要求扩容 +20h，全程约 40–50 小时）；原理=心智模型并入各课；Vue2 一课速览；README 已载正式目录
+- [课程仓库结构落地](tickets/006-repo-structure.md) — lessons/NN-slug 命名、demos/ 每课一目录、project/ 第5课初始化、templates/lesson-template.md（作业验收=自查清单）；写课工单套用模板
 
 ## Not yet specified
 

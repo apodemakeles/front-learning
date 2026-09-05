@@ -126,9 +126,10 @@
 ## 仓库导览
 
 - `lessons/` 课程文章（按编号）——写作中
-- `demos/` 课程配套示例 —— 随课创建
+- `demos/` 课程配套示例（每课一目录）
 - `project/` 毕业项目（从第 5 课开始搭建）
 - `notes/` 参考笔记：[版本基准](notes/tech-baseline.md)、[公司存量栈调研](notes/company-stack.md)
+- `templates/` 课程文章骨架模板
 - `wayfinder/` 课程规划地图与决策工单
 - [AGENTS.md](AGENTS.md) 课程写作的工作指南
 
