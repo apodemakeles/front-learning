@@ -16,7 +16,7 @@
 
 课程大纲已定稿（38 课，预计 40–50 小时），正按 wayfinder 工单逐课撰写。
 
-**进度：0 / 38 课已发布**
+**进度：1 / 38 课已发布**
 
 规划决策记录（详见 [wayfinder/map.md](wayfinder/map.md)）：
 
@@ -34,7 +34,7 @@
 
 | # | 课题 | 状态 |
 |---|---|---|
-| 01 | 现代前端全景 + 跑通第一个 Vue 应用 | ⬜ |
+| 01 | [现代前端全景 + 跑通第一个 Vue 应用](lessons/01-modern-frontend-overview-and-first-vue-app.md) | ✅ |
 | 02 | Node.js 与 pnpm：前端的 JVM 与 Maven | ⬜ |
 
 ### 模块二 · 语言（2 课）
