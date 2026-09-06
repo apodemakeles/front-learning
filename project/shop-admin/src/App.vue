@@ -1,6 +1,19 @@
 <script setup lang="ts">
 // 毕业项目：云上拿铁（虚拟门店）管理后台
-// 第 5 课：首页静态版——只用"插值 + 一个属性绑定 + 一个事件"，响应式第 7 课再讲
+// 第 6 课：模板语法细节——菜单与统计卡片数据化（v-for + :key）、class 绑定、事件修饰符、v-if
+// 数据仍是普通常量（点击菜单还切不动高亮），响应式第 7 课再讲
+
+interface MenuItem {
+  id: string
+  label: string
+}
+
+interface StatCard {
+  id: string
+  label: string
+  value: string
+  alert?: boolean // 为 true 时卡片显示"待关注"标签（v-if 的判断条件）
+}
 
 const shopName = '云上拿铁（虚拟门店）'
 const today = new Date().toLocaleDateString('zh-CN', {
@@ -10,9 +23,30 @@ const today = new Date().toLocaleDateString('zh-CN', {
   weekday: 'long',
 })
 
-// 点击事件调用的普通函数：本课还没有响应式数据，所以只往控制台打日志
+// 侧边菜单：数据驱动——增删菜单项只改这个数组，模板不动
+const menuItems: MenuItem[] = [
+  { id: 'dashboard', label: '经营看板' },
+  { id: 'products', label: '商品管理' },
+  { id: 'settings', label: '系统设置' },
+]
+
+// 当前激活的菜单项 id。普通常量，改它页面不会变——点击切换高亮等第 7 课的响应式
+const activeMenuId = 'dashboard'
+
+// 统计卡片：数据驱动
+const statCards: StatCard[] = [
+  { id: 'orders', label: '今日订单', value: '128 单' },
+  { id: 'revenue', label: '今日营业额', value: '¥3,680' },
+  { id: 'todos', label: '待处理事项', value: '3 件', alert: true },
+]
+
 function greet() {
   console.log(`欢迎回来！今天是 ${today}，祝生意兴隆`)
+}
+
+// 帮助链接的事件处理：.prevent 拦下 <a> 的默认跳转后走这里（SPA 内部动作代替整页跳转）
+function openHelp() {
+  console.log('打开帮助中心（本课先打个日志，页面跳转等路由课）')
 }
 </script>
 
@@ -21,16 +55,23 @@ function greet() {
     <!-- 顶栏：店名 + 当前登录人 -->
     <header class="topbar">
       <span class="brand">{{ shopName }} · 管理后台</span>
-      <span class="user" :title="`今天是 ${today}`">店长：老曹</span>
+      <span class="user" :title="`今天是 ${today}`">
+        店长：老曹
+        <a href="https://example.com/help" @click.prevent="openHelp">帮助</a>
+      </span>
     </header>
 
     <div class="body">
-      <!-- 侧边菜单：第 5 课先写死三项，第 6 课改造成 v-for -->
+      <!-- 侧边菜单：v-for 渲染，:class 对象语法按条件挂 active，:key 用稳定 id -->
       <aside class="menu">
         <nav>
-          <a class="active">经营看板</a>
-          <a>商品管理</a>
-          <a>系统设置</a>
+          <a
+            v-for="item in menuItems"
+            :key="item.id"
+            :class="{ active: item.id === activeMenuId }"
+          >
+            {{ item.label }}
+          </a>
         </nav>
       </aside>
 
@@ -42,19 +83,14 @@ function greet() {
           <button @click="greet">打个招呼</button>
         </section>
 
-        <!-- 三张统计卡片：先复制三份，第 6 课用 v-for 消除重复 -->
+        <!-- 统计卡片：v-for 渲染；alert 为 true 的卡片用 v-if 显示标签 -->
         <section class="cards">
-          <div class="card">
-            <p class="label">今日订单</p>
-            <p class="value">128 单</p>
-          </div>
-          <div class="card">
-            <p class="label">今日营业额</p>
-            <p class="value">¥3,680</p>
-          </div>
-          <div class="card">
-            <p class="label">待处理事项</p>
-            <p class="value">3 件</p>
+          <div v-for="card in statCards" :key="card.id" class="card">
+            <p class="label">
+              {{ card.label }}
+              <span v-if="card.alert" class="badge">待关注</span>
+            </p>
+            <p class="value">{{ card.value }}</p>
           </div>
         </section>
       </main>
@@ -85,8 +121,21 @@ function greet() {
 }
 
 .user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-size: 13px;
   color: #cfd3dc;
+}
+
+.user a {
+  color: #cfd3dc;
+  text-decoration: none;
+}
+
+.user a:hover {
+  color: #fff;
+  text-decoration: underline;
 }
 
 .body {
@@ -167,6 +216,9 @@ function greet() {
 }
 
 .card .label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: #86909c;
   font-size: 13px;
   margin-bottom: 8px;
@@ -175,5 +227,13 @@ function greet() {
 .card .value {
   font-size: 24px;
   font-weight: 600;
+}
+
+.badge {
+  padding: 1px 8px;
+  font-size: 12px;
+  color: #f53f3f;
+  border: 1px solid #f53f3f;
+  border-radius: 10px;
 }
 </style>
