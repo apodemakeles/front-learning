@@ -18,7 +18,7 @@
 
 课程大纲已定稿（38 课，预计 40–50 小时），正按 wayfinder 工单逐课撰写。
 
-**进度：8 / 38 课已发布**
+**进度：9 / 38 课已发布（模块三 · Vue 3 基础 完结）**
 
 规划决策记录（详见 [wayfinder/map.md](wayfinder/map.md)）：
 
@@ -54,7 +54,7 @@
 | 06 | [模板语法细节：绑定、条件、列表与 key【项目】](lessons/06-template-syntax-details.md) | ✅ |
 | 07 | [响应式心智模型：ref / reactive / computed【项目】](lessons/07-reactivity-ref-computed.md) | ✅ |
 | 08 | [watch 家族：watch / watchEffect 与副作用【项目】](lessons/08-watch-and-side-effects.md) | ✅ |
-| 09 | 组件基础：props / emit / 插槽 | ⬜ |
+| 09 | [组件基础：props / emit / 插槽【项目】](lessons/09-component-basics.md) | ✅ |
 
 ### 模块四 · Vue 3 进阶编码（6 课）
 
