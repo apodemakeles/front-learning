@@ -64,6 +64,10 @@
 ```
 README.md          课程主页与目录（学员入口）
 AGENTS.md          本文件
+index.md           书站首页（VitePress）
+.vitepress/        书站配置（侧边栏随 lessons/ 自动生成）
+.github/workflows/ 书站自动部署（push main → GitHub Pages）
+package.json       书站构建依赖（vitepress）
 lessons/           课程文章（NN-english-slug.md 命名，骨架见 templates/lesson-template.md）
 demos/             课程配套可运行示例（每课一目录，约定见 demos/README.md）
 project/           贯穿项目（毕业项目，第 5 课初始化）
