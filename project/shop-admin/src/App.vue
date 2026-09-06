@@ -1,8 +1,7 @@
 <script setup lang="ts">
 // 毕业项目：云上拿铁（虚拟门店）管理后台
-// 第 7 课：响应式——ref 驱动菜单高亮与统计数字，computed 派生营业额
-// 点击菜单、点"模拟刷新"，页面实时变——这就是响应式；watch 家族下一课
-import { computed, ref } from 'vue'
+// 第 8 课：watch / watchEffect——响应式数据变化引发的连带动作（副作用）
+import { computed, ref, watch, watchEffect } from 'vue'
 
 interface MenuItem {
   id: string
@@ -31,9 +30,14 @@ const menuItems: MenuItem[] = [
 ]
 
 // 会变的状态用 ref（脚本里读写都走 .value，模板里自动解包不用写）
-const activeMenuId = ref('dashboard')
+// 菜单高亮从 localStorage 恢复上次的选择（写回由下面的 watch 负责）
+const activeMenuId = ref(localStorage.getItem('shop-admin:active-menu') ?? 'dashboard')
 const orderCount = ref(128)
 const pendingCount = ref(3)
+
+// 数据变更记录（审计日志）：watch 副作用的产物，只保留最近 3 条
+let logSeq = 0
+const changeLogs = ref<{ id: number; text: string }[]>([])
 
 // 虚拟客单价：营业额 = 订单数 × 客单价（派生数据，不需要自己的 ref）
 const AVG_PRICE = 28.8
@@ -53,6 +57,28 @@ const statCards = computed<StatCard[]>(() => [
     alert: pendingCount.value > 0,
   },
 ])
+
+// ---- 副作用：数据变了要"做"什么，用 watch / watchEffect ----
+
+// 副作用 1：菜单高亮变化 → 写入 localStorage，下次打开页面恢复
+watch(activeMenuId, (id) => {
+  localStorage.setItem('shop-admin:active-menu', id)
+})
+
+// 副作用 2：统计数据变化 → 追加审计日志（多源 watch，回调同时拿到新旧值）
+watch([orderCount, pendingCount], ([orders, pending], [prevOrders, prevPending]) => {
+  const time = new Date().toLocaleTimeString('zh-CN')
+  changeLogs.value.push({
+    id: ++logSeq,
+    text: `[${time}] 订单 ${prevOrders} → ${orders}，待处理 ${prevPending} → ${pending}`,
+  })
+  if (changeLogs.value.length > 3) changeLogs.value.shift()
+})
+
+// 副作用 3：标签页标题跟随订单数（watchEffect：不指定数据源，读了谁就盯谁）
+watchEffect(() => {
+  document.title = `云上拿铁 · 今日 ${orderCount.value} 单`
+})
 
 // 模拟刷新今日数据（第 22 课接入 mock 后，这里换成真正的接口请求）
 function refreshToday() {
@@ -120,6 +146,14 @@ function openHelp() {
             </p>
             <p class="value">{{ card.value }}</p>
           </div>
+        </section>
+
+        <!-- 数据变更记录：watch 副作用的产物（App.vue 越来越大了，第 9 课拆组件时它是第一个候选） -->
+        <section v-if="changeLogs.length" class="logs">
+          <h2>数据变更记录</h2>
+          <ul>
+            <li v-for="log in changeLogs" :key="log.id">{{ log.text }}</li>
+          </ul>
         </section>
       </main>
     </div>
@@ -273,5 +307,29 @@ function openHelp() {
   color: #f53f3f;
   border: 1px solid #f53f3f;
   border-radius: 10px;
+}
+
+.logs {
+  margin-top: 16px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e5e6eb;
+}
+
+.logs h2 {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.logs ul {
+  list-style: none;
+}
+
+.logs li {
+  color: #4e5969;
+  font-size: 13px;
+  line-height: 1.8;
+  font-family: monospace;
 }
 </style>
