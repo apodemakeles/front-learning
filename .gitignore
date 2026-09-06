@@ -21,3 +21,7 @@ pnpm-debug.log*
 
 # 测试覆盖率
 coverage/
+
+# VitePress 构建产物
+.vitepress/dist/
+.vitepress/cache/
