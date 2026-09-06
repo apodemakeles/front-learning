@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // 毕业项目：云上拿铁（虚拟门店）管理后台
-// 第 6 课：模板语法细节——菜单与统计卡片数据化（v-for + :key）、class 绑定、事件修饰符、v-if
-// 数据仍是普通常量（点击菜单还切不动高亮），响应式第 7 课再讲
+// 第 7 课：响应式——ref 驱动菜单高亮与统计数字，computed 派生营业额
+// 点击菜单、点"模拟刷新"，页面实时变——这就是响应式；watch 家族下一课
+import { computed, ref } from 'vue'
 
 interface MenuItem {
   id: string
@@ -12,9 +13,10 @@ interface StatCard {
   id: string
   label: string
   value: string
-  alert?: boolean // 为 true 时卡片显示"待关注"标签（v-if 的判断条件）
+  alert?: boolean // 为 true 时卡片显示"待关注"标签
 }
 
+// 不变的数据仍用普通常量：菜单内容、店名、日期都不需要"变"
 const shopName = '云上拿铁（虚拟门店）'
 const today = new Date().toLocaleDateString('zh-CN', {
   year: 'numeric',
@@ -22,29 +24,51 @@ const today = new Date().toLocaleDateString('zh-CN', {
   day: 'numeric',
   weekday: 'long',
 })
-
-// 侧边菜单：数据驱动——增删菜单项只改这个数组，模板不动
 const menuItems: MenuItem[] = [
   { id: 'dashboard', label: '经营看板' },
   { id: 'products', label: '商品管理' },
   { id: 'settings', label: '系统设置' },
 ]
 
-// 当前激活的菜单项 id。普通常量，改它页面不会变——点击切换高亮等第 7 课的响应式
-const activeMenuId = 'dashboard'
+// 会变的状态用 ref（脚本里读写都走 .value，模板里自动解包不用写）
+const activeMenuId = ref('dashboard')
+const orderCount = ref(128)
+const pendingCount = ref(3)
 
-// 统计卡片：数据驱动
-const statCards: StatCard[] = [
-  { id: 'orders', label: '今日订单', value: '128 单' },
-  { id: 'revenue', label: '今日营业额', value: '¥3,680' },
-  { id: 'todos', label: '待处理事项', value: '3 件', alert: true },
-]
+// 虚拟客单价：营业额 = 订单数 × 客单价（派生数据，不需要自己的 ref）
+const AVG_PRICE = 28.8
+
+// 卡片也是派生数据 → computed：依赖（orderCount/pendingCount）不变就直接用缓存
+const statCards = computed<StatCard[]>(() => [
+  { id: 'orders', label: '今日订单', value: `${orderCount.value} 单` },
+  {
+    id: 'revenue',
+    label: '今日营业额',
+    value: `¥${Math.round(orderCount.value * AVG_PRICE).toLocaleString('zh-CN')}`,
+  },
+  {
+    id: 'todos',
+    label: '待处理事项',
+    value: `${pendingCount.value} 件`,
+    alert: pendingCount.value > 0,
+  },
+])
+
+// 模拟刷新今日数据（第 22 课接入 mock 后，这里换成真正的接口请求）
+function refreshToday() {
+  orderCount.value = rand(80, 200)
+  pendingCount.value = rand(0, 9)
+}
+
+function rand(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
 
 function greet() {
   console.log(`欢迎回来！今天是 ${today}，祝生意兴隆`)
 }
 
-// 帮助链接的事件处理：.prevent 拦下 <a> 的默认跳转后走这里（SPA 内部动作代替整页跳转）
+// 帮助链接的事件处理：.prevent 拦下 <a> 的默认跳转后走这里
 function openHelp() {
   console.log('打开帮助中心（本课先打个日志，页面跳转等路由课）')
 }
@@ -62,13 +86,14 @@ function openHelp() {
     </header>
 
     <div class="body">
-      <!-- 侧边菜单：v-for 渲染，:class 对象语法按条件挂 active，:key 用稳定 id -->
+      <!-- 侧边菜单：v-for 渲染；点击直接改 activeMenuId，高亮实时切换 -->
       <aside class="menu">
         <nav>
           <a
             v-for="item in menuItems"
             :key="item.id"
             :class="{ active: item.id === activeMenuId }"
+            @click="activeMenuId = item.id"
           >
             {{ item.label }}
           </a>
@@ -80,10 +105,13 @@ function openHelp() {
         <section class="welcome">
           <h1>欢迎回来</h1>
           <p>{{ today }}</p>
-          <button @click="greet">打个招呼</button>
+          <div class="actions">
+            <button class="primary" @click="refreshToday">模拟刷新今日数据</button>
+            <button @click="greet">打个招呼</button>
+          </div>
         </section>
 
-        <!-- 统计卡片：v-for 渲染；alert 为 true 的卡片用 v-if 显示标签 -->
+        <!-- 统计卡片：computed 数组——订单数一变，营业额与"待关注"标签自动跟着变 -->
         <section class="cards">
           <div v-for="card in statCards" :key="card.id" class="card">
             <p class="label">
@@ -191,6 +219,11 @@ function openHelp() {
   margin-bottom: 16px;
 }
 
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
 .welcome button {
   padding: 6px 16px;
   font-size: 14px;
@@ -199,6 +232,11 @@ function openHelp() {
   background: #fff;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.welcome button.primary {
+  background: #1652f0;
+  color: #fff;
 }
 
 .cards {

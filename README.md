@@ -18,7 +18,7 @@
 
 课程大纲已定稿（38 课，预计 40–50 小时），正按 wayfinder 工单逐课撰写。
 
-**进度：6 / 38 课已发布**
+**进度：7 / 38 课已发布**
 
 规划决策记录（详见 [wayfinder/map.md](wayfinder/map.md)）：
 
@@ -52,7 +52,7 @@
 |---|---|---|
 | 05 | [第一个 Vue 组件：模板与 SFC【项目】](lessons/05-first-vue-component-and-sfc.md) | ✅ |
 | 06 | [模板语法细节：绑定、条件、列表与 key【项目】](lessons/06-template-syntax-details.md) | ✅ |
-| 07 | 响应式心智模型：ref / reactive / computed | ⬜ |
+| 07 | [响应式心智模型：ref / reactive / computed【项目】](lessons/07-reactivity-ref-computed.md) | ✅ |
 | 08 | watch 家族：watch / watchEffect 与副作用 | ⬜ |
 | 09 | 组件基础：props / emit / 插槽 | ⬜ |
 

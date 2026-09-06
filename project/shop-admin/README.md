@@ -12,3 +12,4 @@
 |---|---|
 | 第 5 课 | create-vue 初始化（仅 TS）；首页静态版：顶栏 + 侧菜单 + 欢迎卡片 + 三张统计卡片（App.vue 单文件、无 v-for / 响应式） |
 | 第 6 课 | 菜单与统计卡片数据化：v-for + :key（稳定 id）、:class 对象语法（active 高亮）、@click.prevent 帮助链接、v-if"待关注"标签；数据仍为普通常量 |
+| 第 7 课 | 响应式：activeMenuId/orderCount/pendingCount 改 ref（点击菜单切高亮、模拟刷新随机数）、statCards 改 computed（营业额 = 订单数 × 客单价、待关注标签随派生）；不变的数据仍是普通常量 |
