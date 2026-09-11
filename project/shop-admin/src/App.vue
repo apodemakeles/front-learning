@@ -2,12 +2,16 @@
 // 毕业项目：云上拿铁（虚拟门店）管理后台
 // 第 9 课：拆组件——App 只剩"布局 + 状态编排"，视图细节住进 components/
 // 数据向下传（props），动作向上抛（emit），通用容器用插槽填充
-import { computed, ref, watch, watchEffect } from 'vue'
+// 第 10 课：v-model（ShopSwitch 双向开关）、透传（dimmed 落到 StatCards 根元素）、
+// provide/inject（主题色注入，BasePanel 消费）
+import { computed, provide, reactive, ref, watch, watchEffect } from 'vue'
 import AppTopbar from './components/AppTopbar.vue'
 import SideMenu from './components/SideMenu.vue'
 import StatCards from './components/StatCards.vue'
 import ChangeLogs from './components/ChangeLogs.vue'
 import BasePanel from './components/BasePanel.vue'
+import ShopSwitch from './components/ShopSwitch.vue'
+import { THEME_KEY } from './types'
 import type { LogEntry, MenuItem, StatCard } from './types'
 
 // ---- 状态全部留在 App（唯一拥有者），子组件只做无状态展示 ----
@@ -29,6 +33,13 @@ const menuItems: MenuItem[] = [
 const activeMenuId = ref(localStorage.getItem('shop-admin:active-menu') ?? 'dashboard')
 const orderCount = ref(128)
 const pendingCount = ref(3)
+
+// 营业状态：ShopSwitch 用 v-model 双向绑定（持久化同菜单一个套路）
+const shopOpen = ref(localStorage.getItem('shop-admin:open') !== '0')
+
+// 主题色：provide 给整个子树，深层次组件（BasePanel）inject 消费
+const theme = reactive({ primary: '#1652f0' })
+provide(THEME_KEY, theme)
 
 // 虚拟客单价：营业额 = 订单数 × 客单价（派生数据，不需要自己的 ref）
 const AVG_PRICE = 28.8
@@ -56,6 +67,10 @@ watch(activeMenuId, (id) => {
   localStorage.setItem('shop-admin:active-menu', id)
 })
 
+watch(shopOpen, (open) => {
+  localStorage.setItem('shop-admin:open', open ? '1' : '0')
+})
+
 watch([orderCount, pendingCount], ([orders, pending], [prevOrders, prevPending]) => {
   const time = new Date().toLocaleTimeString('zh-CN')
   changeLogs.value.push({
@@ -66,7 +81,7 @@ watch([orderCount, pendingCount], ([orders, pending], [prevOrders, prevPending])
 })
 
 watchEffect(() => {
-  document.title = `云上拿铁 · 今日 ${orderCount.value} 单`
+  document.title = `云上拿铁 · 今日 ${orderCount.value} 单${shopOpen.value ? '' : ' · 已打烊'}`
 })
 
 // ---- 动作：改状态（状态在谁那里，修改权就在谁那里）----
@@ -104,12 +119,34 @@ function openHelp() {
         <BasePanel title="欢迎回来">
           <p class="date">{{ today }}</p>
           <div class="actions">
-            <button class="primary" @click="refreshToday">模拟刷新今日数据</button>
-            <button @click="greet">打个招呼</button>
+            <ShopSwitch v-model="shopOpen" />
+            <button
+              class="primary"
+              :disabled="!shopOpen"
+              :style="{ background: theme.primary, borderColor: theme.primary }"
+              @click="refreshToday"
+            >
+              模拟刷新今日数据
+            </button>
+            <button :style="{ color: theme.primary, borderColor: theme.primary }" @click="greet">
+              打个招呼
+            </button>
+          </div>
+          <div class="theme-picker">
+            主题：
+            <button
+              v-for="c in ['#1652f0', '#722ed1', '#fa8c16']"
+              :key="c"
+              class="dot"
+              :style="{ background: c }"
+              :aria-label="`主题色 ${c}`"
+              @click="theme.primary = c"
+            />
           </div>
         </BasePanel>
 
-        <StatCards :cards="statCards" />
+        <!-- class 透传：dimmed 不在 StatCards 的 props 里，自动落到它的根元素 -->
+        <StatCards :cards="statCards" :class="{ dimmed: !shopOpen }" />
         <ChangeLogs v-if="changeLogs.length" :logs="changeLogs" />
       </main>
     </div>
@@ -160,7 +197,38 @@ function openHelp() {
 }
 
 .actions button.primary {
+  border-color: #1652f0;
   background: #1652f0;
   color: #fff;
+}
+
+.actions button.primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* dimmed 经透传落在 StatCards 根元素上；子组件的根节点同时受
+   父组件 scoped 样式影响（第 9 课原理 3 的补充），所以这里能选中它 */
+.dimmed {
+  opacity: 0.45;
+  filter: grayscale(1);
+}
+
+.theme-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  color: #86909c;
+  font-size: 13px;
+}
+
+.theme-picker .dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px #c9cdd4;
+  cursor: pointer;
 }
 </style>

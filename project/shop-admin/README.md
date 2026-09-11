@@ -15,3 +15,4 @@
 | 第 7 课 | 响应式：activeMenuId/orderCount/pendingCount 改 ref（点击菜单切高亮、模拟刷新随机数）、statCards 改 computed（营业额 = 订单数 × 客单价、待关注标签随派生）；不变的数据仍是普通常量 |
 | 第 8 课 | watch / watchEffect：菜单高亮 localStorage 持久化（watch 单源）、数据变更记录审计日志（多源 watch + 新旧值，保留 3 条）、标签页标题跟随订单数（watchEffect）；App.vue 开始变大——第 9 课拆组件 |
 | 第 9 课 | 拆组件：types.ts 共享类型 + components/（AppTopbar：props+emit、SideMenu：props+emit+v-for、StatCards/ChangeLogs：纯展示、BasePanel：插槽容器）；App.vue 318 → 166 行，只剩布局 + 状态编排；全量回归第 6–8 课验收项 |
+| 第 10 课 | v-model / 透传 / provide-inject：ShopSwitch（defineModel 双向开关 + localStorage 持久化）、打烊联动（dimmed class 透传落到 StatCards 根元素、刷新按钮禁用）、主题色注入（THEME_KEY InjectionKey，App provide → BasePanel inject，换色圆点全局联动） |

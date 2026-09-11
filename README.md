@@ -18,7 +18,7 @@
 
 课程大纲已定稿（38 课，预计 40–50 小时），正按 wayfinder 工单逐课撰写。
 
-**进度：9 / 38 课已发布（模块三 · Vue 3 基础 完结）**
+**进度：10 / 38 课已发布（模块四 · Vue 3 进阶编码 进行中）**
 
 规划决策记录（详见 [wayfinder/map.md](wayfinder/map.md)）：
 
@@ -60,7 +60,7 @@
 
 | # | 课题 | 状态 |
 |---|---|---|
-| 10 | v-model 与 defineModel、透传、provide/inject | ⬜ |
+| 10 | [v-model 与 defineModel、透传、provide/inject【项目】](lessons/10-v-model-attrs-provide-inject.md) | ✅ |
 | 11 | 动态组件、异步组件、KeepAlive、Teleport | ⬜ |
 | 12 | 插槽实战：作用域插槽与渲染器模式 | ⬜ |
 | 13 | composable 设计模式：useRequest / usePagination | ⬜ |
