@@ -17,3 +17,4 @@
 | 第 9 课 | 拆组件：types.ts 共享类型 + components/（AppTopbar：props+emit、SideMenu：props+emit+v-for、StatCards/ChangeLogs：纯展示、BasePanel：插槽容器）；App.vue 318 → 166 行，只剩布局 + 状态编排；全量回归第 6–8 课验收项 |
 | 第 10 课 | v-model / 透传 / provide-inject：ShopSwitch（defineModel 双向开关 + localStorage 持久化）、打烊联动（dimmed class 透传落到 StatCards 根元素、刷新按钮禁用）、主题色注入（THEME_KEY InjectionKey，App provide → BasePanel inject，换色圆点全局联动） |
 | 第 11 课 | 动态组件 / KeepAlive / 异步组件 / Teleport：统计区"卡片/列表"双视图（`<component :is>` 切换，StatListView 异步分包 + 私有状态"仅看需关注"由 KeepAlive 保留）、操作提示 toast（Teleport 送到 body） |
+| 第 12 课 | 插槽实战：DataTable 通用表格（渲染器模式，泛型组件 generic="T"、#head 具名插槽、#row 作用域插槽回传 row/index、空态 fallback）；StatListView 手写表格换 DataTable；ChangeLogs 行渲染开放（#row + fallback，App 不改零行为变化） |

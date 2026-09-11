@@ -1,5 +1,7 @@
 <script setup lang="ts">
-// 数据变更记录：纯展示组件，但内部用 BasePanel 当容器——组件组合组件
+// 数据变更记录：行渲染开放给使用方——#row 作用域插槽回传 log；
+// 标签之间的 {{ log.text }} 是 fallback（默认渲染），使用方不传 #row 就用它，
+// 行为与从前完全一致
 import BasePanel from './BasePanel.vue'
 import type { LogEntry } from '../types'
 
@@ -9,7 +11,9 @@ defineProps<{ logs: LogEntry[] }>()
 <template>
   <BasePanel title="数据变更记录">
     <ul>
-      <li v-for="log in logs" :key="log.id">{{ log.text }}</li>
+      <li v-for="log in logs" :key="log.id">
+        <slot name="row" :log="log">{{ log.text }}</slot>
+      </li>
     </ul>
   </BasePanel>
 </template>

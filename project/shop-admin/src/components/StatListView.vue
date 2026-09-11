@@ -1,7 +1,8 @@
 <script setup lang="ts">
-// 统计数据 · 列表视图：表格展示。"仅看需关注"是本视图的私有状态——
-// 切到卡片视图再切回来仍保留，因为外层用 KeepAlive 缓存了本组件实例
+// 统计数据 · 列表视图：表格交给通用 DataTable（渲染器模式），
+// 本组件只声明"列"——表头与每个单元格写在插槽里，行遍历/key/空态不用管
 import { computed, ref } from 'vue'
+import DataTable from './DataTable.vue'
 import type { StatCard } from '../types'
 
 const props = defineProps<{ cards: StatCard[] }>()
@@ -17,18 +18,18 @@ const shownCards = computed(() =>
 <template>
   <!-- 单根包裹：多根组件不自动透传（第 10 课），外层的 dimmed class 要能落到根元素 -->
   <div class="stat-list">
-    <table class="stat-table">
-      <thead>
-        <tr><th>指标</th><th>数值</th><th>状态</th></tr>
-      </thead>
-      <tbody>
-        <tr v-for="card in shownCards" :key="card.id">
-          <td>{{ card.label }}</td>
-          <td>{{ card.value }}</td>
-          <td :class="{ warn: card.alert }">{{ card.alert ? '需关注' : '—' }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <DataTable :rows="shownCards" :row-key="card => card.id">
+      <template #head>
+        <th>指标</th>
+        <th>数值</th>
+        <th>状态</th>
+      </template>
+      <template #row="{ row }">
+        <td>{{ row.label }}</td>
+        <td>{{ row.value }}</td>
+        <td :class="{ warn: row.alert }">{{ row.alert ? '需关注' : '—' }}</td>
+      </template>
+    </DataTable>
     <label class="only-alert">
       <input v-model="onlyAlert" type="checkbox" /> 仅看需关注
     </label>
@@ -42,32 +43,8 @@ const shownCards = computed(() =>
   gap: 12px;
 }
 
-.stat-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  border: 1px solid #e5e6eb;
-}
-
-.stat-table th,
-.stat-table td {
-  padding: 10px 16px;
-  font-size: 14px;
-  text-align: left;
-  border-bottom: 1px solid #f2f3f5;
-}
-
-.stat-table th {
-  color: #86909c;
-  font-weight: 500;
-  font-size: 13px;
-}
-
-.stat-table tr:last-child td {
-  border-bottom: none;
-}
-
-.stat-table td.warn {
+/* td 是插槽内容、编译在本组件作用域（第 9 课），scoped 样式直接命中 */
+td.warn {
   color: #f53f3f;
 }
 

@@ -18,7 +18,7 @@
 
 课程大纲已定稿（38 课，预计 40–50 小时），正按 wayfinder 工单逐课撰写。
 
-**进度：11 / 38 课已发布**
+**进度：12 / 38 课已发布**
 
 规划决策记录（详见 [wayfinder/map.md](wayfinder/map.md)）：
 
@@ -62,7 +62,7 @@
 |---|---|---|
 | 10 | [v-model 与 defineModel、透传、provide/inject【项目】](lessons/10-v-model-attrs-provide-inject.md) | ✅ |
 | 11 | [动态组件、异步组件、KeepAlive、Teleport【项目】](lessons/11-dynamic-async-keepalive-teleport.md) | ✅ |
-| 12 | 插槽实战：作用域插槽与渲染器模式 | ⬜ |
+| 12 | [插槽实战：作用域插槽与渲染器模式【项目】](lessons/12-scoped-slots-and-renderer-pattern.md) | ✅ |
 | 13 | composable 设计模式：useRequest / usePagination | ⬜ |
 | 14 | Vue + TS 类型进阶：泛型组件、emits/插槽类型、.d.ts | ⬜ |
 | 15 | 生命周期与 nextTick：渲染时机 | ⬜ |
