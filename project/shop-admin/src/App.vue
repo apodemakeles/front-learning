@@ -4,7 +4,10 @@
 // 数据向下传（props），动作向上抛（emit），通用容器用插槽填充
 // 第 10 课：v-model（ShopSwitch 双向开关）、透传（dimmed 落到 StatCards 根元素）、
 // provide/inject（主题色注入，BasePanel 消费）
-import { computed, provide, reactive, ref, watch, watchEffect } from 'vue'
+// 第 11 课：动态组件（统计区卡片/列表视图切换）、KeepAlive（缓存视图实例）、
+// 异步组件（列表视图按需分包）、Teleport（操作提示 toast 送到 body）
+import { computed, defineAsyncComponent, provide, reactive, ref, watch, watchEffect } from 'vue'
+import type { Component } from 'vue'
 import AppTopbar from './components/AppTopbar.vue'
 import SideMenu from './components/SideMenu.vue'
 import StatCards from './components/StatCards.vue'
@@ -13,6 +16,10 @@ import BasePanel from './components/BasePanel.vue'
 import ShopSwitch from './components/ShopSwitch.vue'
 import { THEME_KEY } from './types'
 import type { LogEntry, MenuItem, StatCard } from './types'
+
+// 列表视图异步加载：defineAsyncComponent + 动态 import()——
+// build 时独立分包，首屏不下载，第一次切到"列表"才加载
+const StatListView = defineAsyncComponent(() => import('./components/StatListView.vue'))
 
 // ---- 状态全部留在 App（唯一拥有者），子组件只做无状态展示 ----
 const shopName = '云上拿铁（虚拟门店）'
@@ -59,6 +66,25 @@ const statCards = computed<StatCard[]>(() => [
   },
 ])
 
+// 统计区视图：卡片 / 列表，动态组件切换；卡片视图是同步的（首屏就要），
+// 列表视图异步（用得少，用的时候再下载）
+type StatView = 'cards' | 'list'
+const statView = ref<StatView>('cards')
+const statViews: Record<StatView, Component> = {
+  cards: StatCards,
+  list: StatListView,
+}
+
+// 操作提示（Teleport 到 body 的 toast）
+const toast = ref<string | null>(null)
+let toastTimer: ReturnType<typeof setTimeout> | undefined
+
+function showToast(msg: string) {
+  toast.value = msg
+  clearTimeout(toastTimer)
+  toastTimer = setTimeout(() => (toast.value = null), 2000)
+}
+
 // ---- 副作用（第 8 课）----
 let logSeq = 0
 const changeLogs = ref<LogEntry[]>([])
@@ -88,6 +114,7 @@ watchEffect(() => {
 function refreshToday() {
   orderCount.value = rand(80, 200)
   pendingCount.value = rand(0, 9)
+  showToast(`数据已更新 ${new Date().toLocaleTimeString('zh-CN')}`)
 }
 
 function rand(min: number, max: number) {
@@ -145,11 +172,33 @@ function openHelp() {
           </div>
         </BasePanel>
 
-        <!-- class 透传：dimmed 不在 StatCards 的 props 里，自动落到它的根元素 -->
-        <StatCards :cards="statCards" :class="{ dimmed: !shopOpen }" />
+        <!-- 统计区：卡片/列表两个视图动态切换。切走的视图被 KeepAlive 缓存而非销毁；
+             dimmed 经透传落到"当前视图"的根元素上 -->
+        <div class="stats-zone">
+          <div class="view-tabs">
+            <button :class="{ on: statView === 'cards' }" @click="statView = 'cards'">
+              卡片
+            </button>
+            <button :class="{ on: statView === 'list' }" @click="statView = 'list'">
+              列表
+            </button>
+          </div>
+          <KeepAlive>
+            <component
+              :is="statViews[statView]"
+              :cards="statCards"
+              :class="{ dimmed: !shopOpen }"
+            />
+          </KeepAlive>
+        </div>
         <ChangeLogs v-if="changeLogs.length" :logs="changeLogs" />
       </main>
     </div>
+
+    <!-- 操作提示：DOM 传送到 body 下（Teleport），但数据/样式仍归 App 管 -->
+    <Teleport to="body">
+      <div v-if="toast" class="toast">{{ toast }}</div>
+    </Teleport>
   </div>
 </template>
 
@@ -230,5 +279,44 @@ function openHelp() {
   border: 2px solid #fff;
   box-shadow: 0 0 0 1px #c9cdd4;
   cursor: pointer;
+}
+
+.stats-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.view-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.view-tabs button {
+  padding: 4px 14px;
+  font-size: 13px;
+  border: 1px solid #e5e6eb;
+  background: #fff;
+  color: #4e5969;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.view-tabs button.on {
+  border-color: #1652f0;
+  color: #1652f0;
+  font-weight: 600;
+}
+
+.toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  padding: 10px 20px;
+  background: #1f2329;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 6px;
+  z-index: 1000;
 }
 </style>
