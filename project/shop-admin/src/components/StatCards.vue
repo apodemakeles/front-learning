@@ -1,9 +1,10 @@
 <script setup lang="ts">
 // 统计卡片：纯展示组件——数据进（props），无事件出。
-// v-for 与 :key 跟着模板一起搬进来：列表怎么渲染是这个组件的私事
+// v-for 与 :key 跟着模板一起搬进来：列表怎么渲染是这个组件的私事。
+// loading 与列表视图对齐接口（多视图组件的惯例）：卡片视图暂不用，避免透传杂属性
 import type { StatCard } from '../types'
 
-defineProps<{ cards: StatCard[] }>()
+defineProps<{ cards: StatCard[]; loading?: boolean }>()
 </script>
 
 <template>

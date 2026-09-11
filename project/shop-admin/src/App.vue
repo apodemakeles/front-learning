@@ -4,9 +4,9 @@
 // 数据向下传（props），动作向上抛（emit），通用容器用插槽填充
 // 第 10 课：v-model（ShopSwitch 双向开关）、透传（dimmed 落到 StatCards 根元素）、
 // provide/inject（主题色注入，BasePanel 消费）
-// 第 11 课：动态组件（统计区卡片/列表视图切换）、KeepAlive（缓存视图实例）、
-// 异步组件（列表视图按需分包）、Teleport（操作提示 toast 送到 body）
-import { computed, defineAsyncComponent, provide, reactive, ref, watch, watchEffect } from 'vue'
+// 第 13 课：composable——今日经营数据（状态/派生/加载中/刷新动作）
+// 收进 composables/useMockStats.ts，App 只负责消费与编排副作用
+import { defineAsyncComponent, provide, reactive, ref, watch, watchEffect } from 'vue'
 import type { Component } from 'vue'
 import AppTopbar from './components/AppTopbar.vue'
 import SideMenu from './components/SideMenu.vue'
@@ -14,8 +14,9 @@ import StatCards from './components/StatCards.vue'
 import ChangeLogs from './components/ChangeLogs.vue'
 import BasePanel from './components/BasePanel.vue'
 import ShopSwitch from './components/ShopSwitch.vue'
+import { useMockStats } from './composables/useMockStats'
 import { THEME_KEY } from './types'
-import type { LogEntry, MenuItem, StatCard } from './types'
+import type { LogEntry, MenuItem } from './types'
 
 // 列表视图异步加载：defineAsyncComponent + 动态 import()——
 // build 时独立分包，首屏不下载，第一次切到"列表"才加载
@@ -38,33 +39,16 @@ const menuItems: MenuItem[] = [
 
 // 菜单高亮从 localStorage 恢复上次的选择（写回由下面的 watch 负责）
 const activeMenuId = ref(localStorage.getItem('shop-admin:active-menu') ?? 'dashboard')
-const orderCount = ref(128)
-const pendingCount = ref(3)
 
 // 营业状态：ShopSwitch 用 v-model 双向绑定（持久化同菜单一个套路）
 const shopOpen = ref(localStorage.getItem('shop-admin:open') !== '0')
 
+// 今日经营数据来自组合式函数：解构安全——返回的每个字段都是独立的 ref/computed 盒子
+const { orderCount, pendingCount, loading, statCards, refresh } = useMockStats()
+
 // 主题色：provide 给整个子树，深层次组件（BasePanel）inject 消费
 const theme = reactive({ primary: '#1652f0' })
 provide(THEME_KEY, theme)
-
-// 虚拟客单价：营业额 = 订单数 × 客单价（派生数据，不需要自己的 ref）
-const AVG_PRICE = 28.8
-
-const statCards = computed<StatCard[]>(() => [
-  { id: 'orders', label: '今日订单', value: `${orderCount.value} 单` },
-  {
-    id: 'revenue',
-    label: '今日营业额',
-    value: `¥${Math.round(orderCount.value * AVG_PRICE).toLocaleString('zh-CN')}`,
-  },
-  {
-    id: 'todos',
-    label: '待处理事项',
-    value: `${pendingCount.value} 件`,
-    alert: pendingCount.value > 0,
-  },
-])
 
 // 统计区视图：卡片 / 列表，动态组件切换；卡片视图是同步的（首屏就要），
 // 列表视图异步（用得少，用的时候再下载）
@@ -111,14 +95,10 @@ watchEffect(() => {
 })
 
 // ---- 动作：改状态（状态在谁那里，修改权就在谁那里）----
-function refreshToday() {
-  orderCount.value = rand(80, 200)
-  pendingCount.value = rand(0, 9)
+// 刷新的动作与 loading 状态在 composable 里，这里只编排"成功后弹提示"
+async function refreshToday() {
+  await refresh()
   showToast(`数据已更新 ${new Date().toLocaleTimeString('zh-CN')}`)
-}
-
-function rand(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 function greet() {
@@ -149,11 +129,11 @@ function openHelp() {
             <ShopSwitch v-model="shopOpen" />
             <button
               class="primary"
-              :disabled="!shopOpen"
+              :disabled="!shopOpen || loading"
               :style="{ background: theme.primary, borderColor: theme.primary }"
               @click="refreshToday"
             >
-              模拟刷新今日数据
+              {{ loading ? '刷新中…' : '模拟刷新今日数据' }}
             </button>
             <button :style="{ color: theme.primary, borderColor: theme.primary }" @click="greet">
               打个招呼
@@ -187,6 +167,7 @@ function openHelp() {
             <component
               :is="statViews[statView]"
               :cards="statCards"
+              :loading="loading"
               :class="{ dimmed: !shopOpen }"
             />
           </KeepAlive>

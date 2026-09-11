@@ -7,6 +7,7 @@
 defineProps<{
   rows: T[]
   rowKey: (row: T) => string | number
+  loading?: boolean
   emptyText?: string
 }>()
 </script>
@@ -19,7 +20,12 @@ defineProps<{
       </tr>
     </thead>
     <tbody>
-      <template v-if="rows.length === 0">
+      <template v-if="loading">
+        <tr class="empty-row">
+          <td>加载中…</td>
+        </tr>
+      </template>
+      <template v-else-if="rows.length === 0">
         <tr class="empty-row">
           <td>{{ emptyText ?? '暂无数据' }}</td>
         </tr>

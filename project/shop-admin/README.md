@@ -18,3 +18,4 @@
 | 第 10 课 | v-model / 透传 / provide-inject：ShopSwitch（defineModel 双向开关 + localStorage 持久化）、打烊联动（dimmed class 透传落到 StatCards 根元素、刷新按钮禁用）、主题色注入（THEME_KEY InjectionKey，App provide → BasePanel inject，换色圆点全局联动） |
 | 第 11 课 | 动态组件 / KeepAlive / 异步组件 / Teleport：统计区"卡片/列表"双视图（`<component :is>` 切换，StatListView 异步分包 + 私有状态"仅看需关注"由 KeepAlive 保留）、操作提示 toast（Teleport 送到 body） |
 | 第 12 课 | 插槽实战：DataTable 通用表格（渲染器模式，泛型组件 generic="T"、#head 具名插槽、#row 作用域插槽回传 row/index、空态 fallback）；StatListView 手写表格换 DataTable；ChangeLogs 行渲染开放（#row + fallback，App 不改零行为变化） |
+| 第 13 课 | composable：composables/useMockStats.ts（orderCount/pendingCount/loading + statCards 派生 + async refresh：600ms 模拟延时 + seq 防竞态版本号）；App 解构消费（散装状态收编，watch 留 App 编排）；DataTable 补 loading 态、双视图 props 接口对齐 |

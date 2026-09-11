@@ -5,7 +5,7 @@ import { computed, ref } from 'vue'
 import DataTable from './DataTable.vue'
 import type { StatCard } from '../types'
 
-const props = defineProps<{ cards: StatCard[] }>()
+const props = defineProps<{ cards: StatCard[]; loading?: boolean }>()
 
 const onlyAlert = ref(false)
 
@@ -18,7 +18,7 @@ const shownCards = computed(() =>
 <template>
   <!-- 单根包裹：多根组件不自动透传（第 10 课），外层的 dimmed class 要能落到根元素 -->
   <div class="stat-list">
-    <DataTable :rows="shownCards" :row-key="card => card.id">
+    <DataTable :rows="shownCards" :row-key="card => card.id" :loading="loading">
       <template #head>
         <th>指标</th>
         <th>数值</th>
